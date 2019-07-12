@@ -73,11 +73,15 @@ class Universidad
   #Metodos de listado para menu
   def ListarTalleres()
     resp = ""
+    resp += "\nCódigo".ljust(10)
+    resp += "Taller"
+    resp += "\n----------------------"
     for taller in lista_talleres
-      resp+= "[#{taller.codigo}] - #{taller.nombre}\n"
+      resp+= "\n[#{taller.codigo}] -".ljust(10)
+      resp+= "#{taller.nombre}"
     end
 
-    return resp
+    return resp + "\n\n"
   end
 
   def ListarAlumnos()
@@ -152,12 +156,19 @@ class Universidad
   def ReporteAlumnosTaller(taller)
 
     resp = ""
-    resp += "Alumno".ljust(20)
+    resp += "Alumno".ljust(25)
+    resp += "Eva. 1".ljust(10)
+    resp += "Eva. 2".ljust(10)
+    resp += "Exá. final".ljust(13)
+    resp += "Eva. Virtual".ljust(15) if taller.tipo == "B"
+    resp += "Promedio Final".ljust(15)
     for ta in taller.alumnos_taller
-      resp += "\n" + ta.alumno.nombres
-      resp += ta.eva1.to_s.ljust(8)
-      resp += ta.eva2.to_s.ljust(8)
-      resp += ta.CalcularPromedioFinal().round(2).to_s.ljust(8)
+      resp += "\n" + ta.alumno.nombres.ljust(25)
+      resp += ta.eva1.to_s.ljust(10)
+      resp += ta.eva2.to_s.ljust(10)
+      resp += ta.examen_final.to_s.ljust(13)
+      resp += ta.examen_virtual.to_s.ljust(15) if taller.tipo == "B"
+      resp += ta.CalcularPromedioFinal().round(2).to_s.ljust(15)
 
       
     end
@@ -352,8 +363,7 @@ class Universidad
 
 
   def ReporteTalleres()
-    puts "Seleccione el taller:"
-    puts "------------------------"
+    #puts "Seleccione el taller:"
     puts ListarTalleres()
 
     print "Ingrese código del taller: "
@@ -646,7 +656,7 @@ uni.RegistrarAlumno(alumno02)
 uni.RegistrarAlumno(alumno03)
 
 docente01 = Docente.new("p67138388","Miguel Angel","Martinez Sosa")
-docente02 = Docente.new("p67138323","Rosa","Melano")
+docente02 = Docente.new("p67138323","Rosa","Melgarejo Sánzhez")
 docente03 = Docente.new("p67136578","Nestor","Villanueva Caceres")
 docente04 = Docente.new("p67135682","Piter","Rodriguez Rojas")
 uni.RegistrarDocente(docente01)
@@ -708,6 +718,7 @@ uni.AgregarAlumnoTaller(alumno_taller)
 alumno_taller = t5.MatricularAlumno(alumno01)
 alumno_taller.AgregarNotas(20, 17, 18)
 uni.AgregarAlumnoTaller(alumno_taller)
+
 
 
 #uni.Reportealumnos()
